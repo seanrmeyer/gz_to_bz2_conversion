@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --job-name gz_to_bz2_conversion
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=36
+#SBATCH --mem=64g
+#SBATCH --time=12:00:00
+#SBATCH --account=slurm_account
+#SBATCH --partition=standard
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+echo $1
+cd $1
+ls *.gz | parallel "gunzip -c {} | lbzip2 -c > {.}.bz2"
